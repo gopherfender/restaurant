@@ -1,0 +1,30 @@
+@startuml
+class Restaurant {
+    - String name
+    - String imageURL
+    - ArrayList<Menu> menus
+    +getName()
+    +getMenus()
+    +getImageURL()
+    +addMenu()
+}
+
+class Menu {
+    - ArrayList<Item> items
+    - String title
+    +getTitle()
+    +getItems()
+    +addItem()
+}
+
+class Item {
+    - String name
+    - double price
+    +getName()
+    +getPrice()
+
+}
+
+Restaurant--{ Menu
+Menu --{ Item
+@enduml
