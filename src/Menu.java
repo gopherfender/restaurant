@@ -1,9 +1,11 @@
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Menu {
+    public static ArrayList<Menu> all = new ArrayList<>();
     private int id;
     private int restaurantId;
     private String title;
@@ -23,7 +25,14 @@ public class Menu {
         } catch (SQLException error) {
             error.printStackTrace();
         }
+        Menu.all.add(this);
+    }
 
+    public Menu(int id, int restaurantId, String name) {
+        this.id = id;
+        this.restaurantId = restaurantId;
+        this.title = name;
+        Menu.all.add(this);
     }
 
     public static void init() {
@@ -31,6 +40,15 @@ public class Menu {
             Statement createTable = DB.conn.createStatement();
             createTable.execute(
                     "CREATE TABLE IF NOT EXISTS menus (id INTEGER PRIMARY KEY, restaurant_id INTEGER, name TEXT);");
+            Statement getMenus = DB.conn.createStatement();
+            ResultSet menus = getMenus.executeQuery("SELECT * FROM menus;");
+            while (menus.next()) {
+                int id = menus.getInt(1);
+                int restaurantId = menus.getInt(2);
+                String name = menus.getString(3);
+                new Menu(id, restaurantId, name);
+            }
+
         } catch (SQLException error) {
             System.out.println(error.getMessage());
         }
