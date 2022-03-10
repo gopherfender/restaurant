@@ -6,15 +6,15 @@ import org.junit.Test;
 public class TestMenu {
     @Test
     public void a_menu_has_a_title() {
-        Menu menu = new Menu("Five Guys");
+        Menu menu = new Menu("Five Guys", 1);
         assertEquals("Five Guys", menu.getTitle());
     }
 
     @Test
     public void a_menu_can_add_items() {
-        Menu menu = new Menu("Five Guys");
-        Item item = new Item("Bacon Cheeseburger", 5.99);
-        menu.addItem(item);
+        Menu menu = new Menu("Five Guys", 1);
+        Item item = new Item(1, "Bacon Cheeseburger", 5.99);
+        menu.createItem("asd", 4.99);
         assertTrue(menu.getItems().contains(item));
     }
 

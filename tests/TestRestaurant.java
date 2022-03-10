@@ -20,8 +20,7 @@ public class TestRestaurant {
     @Test
     public void a_restaurant_has_a_menu() {
         Restaurant fiveGuys = new Restaurant("Five Guys", "./fiveguys.png");
-        Menu menu = new Menu("Standard");
-        fiveGuys.addMenu(menu);
+        Menu menu = new Menu("Standard", 1);
         assertTrue(fiveGuys.getMenus().contains(menu));
     }
 
