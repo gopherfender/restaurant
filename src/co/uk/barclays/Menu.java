@@ -1,7 +1,8 @@
+package co.uk.barclays;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Menu {
@@ -32,21 +33,37 @@ public class Menu {
         this.id = id;
         this.restaurantId = restaurantId;
         this.title = name;
+        this.items = new ArrayList<>();
         Menu.all.add(this);
     }
 
-    public static void init() {
+    public static ArrayList<Menu> getAll() {
+        return all;
+    }
+
+    public static void init(Menu menu) {
         try {
-            Statement createTable = DB.conn.createStatement();
-            createTable.execute(
-                    "CREATE TABLE IF NOT EXISTS menus (id INTEGER PRIMARY KEY, restaurant_id INTEGER, name TEXT);");
-            Statement getMenus = DB.conn.createStatement();
-            ResultSet menus = getMenus.executeQuery("SELECT * FROM menus;");
-            while (menus.next()) {
-                int id = menus.getInt(1);
-                int restaurantId = menus.getInt(2);
-                String name = menus.getString(3);
-                new Menu(id, restaurantId, name);
+            // Statement createTable = DB.conn.createStatement();
+            // createTable.execute(
+            // "CREATE TABLE IF NOT EXISTS menus (id INTEGER PRIMARY KEY, restaurant_id
+            // INTEGER, name TEXT);");
+            // Statement getMenus = DB.conn.createStatement();
+            // ResultSet menus = getMenus.executeQuery("SELECT * FROM menus;");
+            // while (menus.next()) {
+            // int id = menus.getInt(1);
+            // int restaurantId = menus.getInt(2);
+            // String name = menus.getString(3);
+            // // Menu menu = new Menu(id, restaurantId, name);
+
+            PreparedStatement getItems = DB.conn.prepareStatement("SELECT * FROM items WHERE menu_id=?;");
+            getItems.setInt(1, menu.getId());
+            ResultSet items = getItems.executeQuery();
+            while (items.next()) {
+                String itemName = items.getString(2);
+                double price = items.getDouble(3);
+                int itemId = items.getInt(4);
+                Item item = new Item(menu.getId(), itemName, price, itemId);
+                menu.items.add(item);
             }
 
         } catch (SQLException error) {
@@ -65,6 +82,10 @@ public class Menu {
 
     public ArrayList<Item> getItems() {
         return this.items;
+    }
+
+    public int getId() {
+        return this.id;
     }
 
 }

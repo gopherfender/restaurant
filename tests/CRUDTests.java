@@ -11,6 +11,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import co.uk.barclays.DB;
+
 public class CRUDTests {
 
     @Before

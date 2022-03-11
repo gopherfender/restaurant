@@ -3,6 +3,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import co.uk.barclays.Menu;
+import co.uk.barclays.Restaurant;
+
 public class TestRestaurant {
 
     @Test

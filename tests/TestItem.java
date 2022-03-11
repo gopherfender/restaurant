@@ -2,6 +2,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import co.uk.barclays.Item;
+
 public class TestItem {
     @Test
     public void an_item_has_a_name_and_price() {

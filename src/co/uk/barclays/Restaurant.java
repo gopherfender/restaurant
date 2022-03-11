@@ -1,3 +1,5 @@
+package co.uk.barclays;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,11 +24,27 @@ public class Restaurant {
                 int id = restaurants.getInt(1);
                 String name = restaurants.getString(2);
                 String imageURL = restaurants.getString(3);
-                new Restaurant(id, name, imageURL);
+                Restaurant restaurant = new Restaurant(id, name, imageURL);
+
+                PreparedStatement getMenus = DB.conn.prepareStatement("SELECT * FROM menus WHERE restaurant_id=?;");
+                getMenus.setInt(1, id);
+                ResultSet allMenus = getMenus.executeQuery();
+                while (allMenus.next()) {
+                    int menuId = allMenus.getInt(1);
+                    String menuName = allMenus.getString(3);
+                    Menu menu = new Menu(menuId, id, menuName);
+                    Menu.init(menu);
+                    restaurant.menus.add(menu);
+                }
             }
+
         } catch (SQLException error) {
             System.out.println(error.getMessage());
         }
+    }
+
+    public static ArrayList<Restaurant> getAll() {
+        return all;
     }
 
     public Restaurant(String name, String imageUrl) {
@@ -41,8 +59,7 @@ public class Restaurant {
             insertRestaurant.executeUpdate();
             this.id = insertRestaurant.getGeneratedKeys().getInt(1);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         Restaurant.all.add(this);
     }
@@ -51,6 +68,7 @@ public class Restaurant {
         this.id = id;
         this.name = name;
         this.imageURL = imageURL;
+        this.menus = new ArrayList<>();
         Restaurant.all.add(this);
     }
 

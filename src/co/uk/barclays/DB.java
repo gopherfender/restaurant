@@ -1,3 +1,5 @@
+package co.uk.barclays;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,6 +13,10 @@ public class DB {
         } catch (SQLException error) {
             System.out.println(error.getMessage());
         }
+    }
+
+    public static void main(String[] args) {
+        new DB("jdbc:sqlite:./restaurants.sqlite");
     }
 
 }

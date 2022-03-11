@@ -1,3 +1,5 @@
+package co.uk.barclays;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,6 +31,10 @@ public class Item {
         } catch (SQLException error) {
             System.out.println(error.getMessage());
         }
+    }
+
+    public static ArrayList<Item> getAll() {
+        return all;
     }
 
     public Item(int menuId, String name, double price, int id) {
@@ -63,6 +69,10 @@ public class Item {
 
     public double getPrice() {
         return this.price;
+    }
+
+    public int getId() {
+        return this.id;
     }
 
 }

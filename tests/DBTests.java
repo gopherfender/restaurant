@@ -6,6 +6,8 @@ import java.sql.SQLException;
 
 import org.junit.Test;
 
+import co.uk.barclays.DB;
+
 public class DBTests {
 
     @Test
